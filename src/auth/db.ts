@@ -27,9 +27,9 @@ export async function createUser(data: Pick<User, "name" | "email" | "password">
 
     let userInput = {name: data.name, email: data.email, password: data.password};
 
-    let res: { user: User } = await fetchRegister(userInput);
+    let res: { user: User, token: string } = await fetchRegister(userInput);
 
-    return res.user;
+    return res;
 }
 
 const fetchLogin = async (userInput: { email: string, password: string }) =>
@@ -39,11 +39,11 @@ const fetchLogin = async (userInput: { email: string, password: string }) =>
         })
     ).json()
 
+export async function findUser(credentials: { email: string, password: string }) {
+    let res: {user: User, token: string} = await fetchLogin(credentials);
+    return res;
+}
+
 const fetchUser = async (id: number) =>
     (await fetch(`${baseUrl}/v1/users/${id}`)
     ).json()
-
-export async function findUser(credentials: { email: string, password: string }) {
-    let res: {user: User, authentication_token: string} = await fetchLogin(credentials);
-    return res.user;
-}

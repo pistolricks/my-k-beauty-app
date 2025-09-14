@@ -5,7 +5,9 @@ import {createUser, findUser} from "./db";
 
 export interface Session {
     id: number;
+    name: string;
     email: string;
+    token: string;
 }
 
 export const getSession = () =>
@@ -16,6 +18,7 @@ export const getSession = () =>
 export async function createSession(user: Session, redirectTo?: string) {
     const validDest = redirectTo?.[0] === "/" && redirectTo[1] !== "/";
     const session = await getSession();
+
     await session.update(user);
     return redirect(validDest ? redirectTo : "/");
 }
@@ -63,21 +66,25 @@ async function checkPassword(storedPassword: string, providedPassword: string) {
 export async function passwordLogin(email: string, password: string) {
     let credentials: { email: string, password: string } = {email, password}
 
-    let user = await findUser(credentials);
-    if (!user)
+    let res = await findUser(credentials);
+
+    let session = {id: res.user?.id, name: res.user?.name, email: res?.user.email, token: res?.token}
+
+    if (!res.user)
         throw new Error("Invalid email or password");
-    else return createSession(user);
+    else return createSession(session);
 
 }
 
 export async function registerUser(name: string, email: string, password: string) {
-    let user = await createUser({
+    let res = await createUser({
         name,
         email,
         password
     });
-    if (!user)
+    let session = {id: res.user?.id, name: res.user?.name, email: res?.user.email, token: res?.token}
+    if (!res.user)
         return redirect("/login?error");
 
-    return createSession(user);
+    return createSession(session);
 }
