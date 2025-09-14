@@ -1,7 +1,7 @@
 import {redirect} from "@solidjs/router";
 import {useSession} from "vinxi/http";
 import {getRandomValues, subtle, timingSafeEqual} from "crypto";
-import {createUser, findUser} from "./db";
+import {createUser, loginUser} from "./db";
 
 export interface Session {
     id: number;
@@ -66,7 +66,7 @@ async function checkPassword(storedPassword: string, providedPassword: string) {
 export async function passwordLogin(email: string, password: string) {
     let credentials: { email: string, password: string } = {email, password}
 
-    let res = await findUser(credentials);
+    let res = await loginUser(credentials);
 
     let session = {id: res.user?.id, name: res.user?.name, email: res?.user.email, token: res?.token}
 

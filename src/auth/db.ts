@@ -39,11 +39,22 @@ const fetchLogin = async (userInput: { email: string, password: string }) =>
         })
     ).json()
 
-export async function findUser(credentials: { email: string, password: string }) {
+export async function loginUser(credentials: { email: string, password: string }) {
     let res: {user: User, token: string} = await fetchLogin(credentials);
     return res;
 }
 
-const fetchUser = async (id: number) =>
+const fetchUserByID = async (id: number) =>
     (await fetch(`${baseUrl}/v1/users/${id}`)
     ).json()
+
+const fetchUserByEmail = async (email: string) =>
+    (await fetch(`${baseUrl}/v1/profile/${email}`)
+    ).json()
+
+
+export async function findUser({ email, id }: { email?: string; id?: number }) {
+    if (id) return await fetchUserByID(id);
+    if (email) return await fetchUserByEmail(email)
+    else return undefined;
+}

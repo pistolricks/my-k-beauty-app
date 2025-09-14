@@ -8,9 +8,9 @@ export const GET = OAuth({
     id: process.env.DISCORD_ID!,
     secret: process.env.DISCORD_SECRET!
   },
-  async handler({ email }, redirectTo) {
+  async handler({ name, email, password }: {name: string, email: string, password?: string }, redirectTo: any) {
     let user = await findUser({ email });
-    if (!user) user = await createUser({ email });
+    if (!user) user = await createUser({name, email, password});
     return createSession(user, redirectTo);
   }
 });

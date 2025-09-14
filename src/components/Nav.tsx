@@ -17,14 +17,6 @@ export default function Nav() {
       >
         Home
       </a>
-        <a
-            href="/register"
-            class={`px-3 py-2 text-sky-100 uppercase transition-colors duration-200 border-b-2 ${
-                isAbout() ? "border-sky-300 text-white" : "border-transparent hover:text-white"
-            }`}
-        >
-            Register
-        </a>
       <a
         href="/about"
         class={`px-3 py-2 text-sky-100 uppercase transition-colors duration-200 border-b-2 ${
@@ -36,12 +28,22 @@ export default function Nav() {
       <Show
         when={signedIn()}
         fallback={
+          <>
+              <a
+              href="/register"
+              class={`px-3 py-2 text-sky-100 uppercase transition-colors duration-200 border-b-2 ${
+                  isAbout() ? "border-sky-300 text-white" : "border-transparent hover:text-white"
+              }`}
+          >
+              Register
+          </a>
           <a
             href="/login"
             class="ml-auto px-4 py-2 text-sky-100 bg-sky-700 border border-sky-600 rounded-md hover:bg-sky-600 hover:text-white focus:outline-none transition-colors duration-200"
           >
             Login
           </a>
+          </>
         }
       >
         <form action={logout} method="post" class="ml-auto">
