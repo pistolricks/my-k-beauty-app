@@ -1,5 +1,5 @@
 import { action, query, redirect } from "@solidjs/router";
-import { getSession, passwordLogin } from "./server";
+import {getSession, passwordLogin, registerUser} from "./server";
 
 // Define routes that require being logged in
 const PROTECTED_ROUTES = ["/"];
@@ -20,13 +20,23 @@ export const querySession = query(async (path: string) => {
   return null;
 }, "session");
 
-export const formLogin = action(async (formData: FormData) => {
+export const formRegister = action(async (formData: FormData) => {
   "use server";
+    const name = formData.get("name");
   const email = formData.get("email");
   const password = formData.get("password");
-  if (typeof email !== "string" || typeof password !== "string")
-    return new Error("Email and password are required");
-  return await passwordLogin(email.trim().toLowerCase(), password);
+  if (typeof name !== "string" || typeof email !== "string" || typeof password !== "string")
+    return new Error("NAME or Email and password are required");
+  return await registerUser(name.trim().toLowerCase(), email.trim().toLowerCase(), password);
+});
+
+export const formLogin = action(async (formData: FormData) => {
+    "use server";
+    const email = formData.get("email");
+    const password = formData.get("password");
+    if (typeof email !== "string" || typeof password !== "string")
+        return new Error("Email and password are required");
+    return await passwordLogin(email.trim().toLowerCase(), password);
 });
 
 export const logout = action(async () => {

@@ -1,28 +1,49 @@
-import { createStorage } from "unstorage";
+import {createStorage} from "unstorage";
 import fsLiteDriver from "unstorage/drivers/fs-lite";
+import {query} from "@solidjs/router";
+import {baseUrl} from "~/app";
 
 interface User {
-  id: number;
-  email: string;
-  password?: string;
+    id: number;
+    created_at: string;
+    name: string;
+    email: string;
+    password?: string;
+    password_hash?: string;
+    activated: boolean;
+    version: number;
 }
 
-const storage = createStorage({ driver: fsLiteDriver({ base: "./.data" }) });
+const storage = createStorage({driver: fsLiteDriver({base: "./.data"})});
 
-export async function createUser(data: Pick<User, "email" | "password">) {
-  const users = (await storage.getItem<User[]>("users:data")) ?? [];
-  const counter = (await storage.getItem<number>("users:counter")) ?? 1;
-  const user: User = { id: counter, ...data };
-  await Promise.all([
-    storage.setItem("users:data", [...users, user]),
-    storage.setItem("users:counter", counter + 1)
-  ]);
-  return user;
+const fetchRegister = async (userInput: { name: string, email: string, password?: string }) =>
+    (await fetch(`${baseUrl}/v1/users`, {
+            method: "POST",
+            body: JSON.stringify(userInput),
+        })
+    ).json()
+
+export async function createUser(data: Pick<User, "name" | "email" | "password">) {
+
+    let userInput = {name: data.name, email: data.email, password: data.password};
+
+    let res: { user: User } = await fetchRegister(userInput);
+
+    return res.user;
 }
 
-export async function findUser({ email, id }: { email?: string; id?: number }) {
-  const users = (await storage.getItem<User[]>("users:data")) ?? [];
-  if (id) return users.find(u => u.id === id);
-  if (email) return users.find(u => u.email === email);
-  return undefined;
+const fetchLogin = async (userInput: { email: string, password: string }) =>
+    (await fetch(`${baseUrl}/v1/tokens/authentication`, {
+            method: "POST",
+            body: JSON.stringify(userInput),
+        })
+    ).json()
+
+const fetchUser = async (id: number) =>
+    (await fetch(`${baseUrl}/v1/users/${id}`)
+    ).json()
+
+export async function findUser(credentials: { email: string, password: string }) {
+    let res: {user: User, authentication_token: string} = await fetchLogin(credentials);
+    return res.user;
 }

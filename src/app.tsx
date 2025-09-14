@@ -7,7 +7,7 @@ import Auth from "./components/Context";
 import Nav from "./components/Nav";
 import ErrorNotification from "./components/Error";
 import "./app.css";
-
+export const baseUrl = "http://localhost:4020"
 export const route: RouteDefinition = {
   preload: ({ location }) => querySession(location.pathname)
 };

@@ -17,6 +17,14 @@ export default function Nav() {
       >
         Home
       </a>
+        <a
+            href="/register"
+            class={`px-3 py-2 text-sky-100 uppercase transition-colors duration-200 border-b-2 ${
+                isAbout() ? "border-sky-300 text-white" : "border-transparent hover:text-white"
+            }`}
+        >
+            Register
+        </a>
       <a
         href="/about"
         class={`px-3 py-2 text-sky-100 uppercase transition-colors duration-200 border-b-2 ${
