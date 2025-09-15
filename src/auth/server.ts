@@ -3,11 +3,27 @@ import {useSession} from "vinxi/http";
 import {getRandomValues, subtle, timingSafeEqual} from "crypto";
 import {createUser, loginUser} from "./db";
 
+export interface TOKEN {
+    token: string;
+    expiry: string;
+}
+
+export interface RimanSession {
+    id: number;
+    repSiteUrl: string;
+    username: string;
+    email: string;
+    token: string;
+
+}
+
 export interface Session {
     id: number;
     name: string;
     email: string;
     token: string;
+    rimanSession?: RimanSession;
+
 }
 
 export const getSession = () =>
@@ -22,6 +38,8 @@ export async function createSession(user: Session, redirectTo?: string) {
     await session.update(user);
     return redirect(validDest ? redirectTo : "/");
 }
+
+
 
 async function createHash(password: string) {
     const salt = getRandomValues(new Uint8Array(16));
@@ -68,7 +86,9 @@ export async function passwordLogin(email: string, password: string) {
 
     let res = await loginUser(credentials);
 
-    let session = {id: res.user?.id, name: res.user?.name, email: res?.user.email, token: res?.token}
+    let session = {id: res.user?.id, name: res.user?.name, email: res?.user.email, token: res?.token?.token, rimanSession: undefined}
+
+    console.log("session", session)
 
     if (!res.user)
         throw new Error("Invalid email or password");
@@ -82,7 +102,7 @@ export async function registerUser(name: string, email: string, password: string
         email,
         password
     });
-    let session = {id: res.user?.id, name: res.user?.name, email: res?.user.email, token: res?.token}
+    let session = {id: res.user?.id, name: res.user?.name, email: res?.user.email, token: res?.token?.token, rimanSession: undefined}
     if (!res.user)
         return redirect("/login?error");
 

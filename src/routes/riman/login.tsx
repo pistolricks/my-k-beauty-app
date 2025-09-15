@@ -1,36 +1,36 @@
 import {Title} from "@solidjs/meta";
 import {useSubmission} from "@solidjs/router";
 import {Show} from "solid-js";
-import {useOAuthLogin} from "start-oauth";
-import {formLogin} from "~/auth";
+import {rimanLoginForm} from "~/riman";
+
 
 export default function Login() {
-    const login = useOAuthLogin();
+
 
     return (
         <main>
-            <Title>Sign In</Title>
-            <h1>Sign in</h1>
+            <Title>Riman Portal</Title>
+            <h1>Riman Portal</h1>
             <div class="space-y-6 font-medium">
-                <PasswordLogin/>
+                <RimanPortal/>
             </div>
         </main>
     );
 }
 
-function PasswordLogin() {
-    const submission = useSubmission(formLogin);
+function RimanPortal() {
+    const submission = useSubmission(rimanLoginForm);
 
     return (
-        <form action={formLogin} method="post" class="space-y-4 space-x-12">
-            <label for="email" class="block text-left w-full">
-                Email
+        <form action={rimanLoginForm} method="post" class="space-y-4 space-x-12">
+            <label for="userName" class="block text-left w-full">
+                Username
                 <input
-                    id="email"
-                    name="email"
-                    type="email"
-                    autocomplete="email"
-                    placeholder="john@doe.com"
+                    id="userName"
+                    name="userName"
+                    type="text"
+                    autocomplete="userName"
+                    placeholder="userName"
                     required
                     class="bg-white mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-500"
                 />

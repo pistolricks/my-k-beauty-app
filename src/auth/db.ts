@@ -2,8 +2,9 @@ import {createStorage} from "unstorage";
 import fsLiteDriver from "unstorage/drivers/fs-lite";
 import {query} from "@solidjs/router";
 import {baseUrl} from "~/app";
+import {TOKEN} from "~/auth/server";
 
-interface User {
+export interface User {
     id: number;
     created_at: string;
     name: string;
@@ -27,7 +28,7 @@ export async function createUser(data: Pick<User, "name" | "email" | "password">
 
     let userInput = {name: data.name, email: data.email, password: data.password};
 
-    let res: { user: User, token: string } = await fetchRegister(userInput);
+    let res: { user: User, token: TOKEN } = await fetchRegister(userInput);
 
     return res;
 }
@@ -40,7 +41,7 @@ const fetchLogin = async (userInput: { email: string, password: string }) =>
     ).json()
 
 export async function loginUser(credentials: { email: string, password: string }) {
-    let res: {user: User, token: string} = await fetchLogin(credentials);
+    let res: {user: User, token: TOKEN} = await fetchLogin(credentials);
     return res;
 }
 

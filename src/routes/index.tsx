@@ -26,6 +26,14 @@ export default function Home() {
       <h1 class="text-center">Hello World</h1>
       <img src="/favicon.svg" alt="logo" class="w-28" />
       You are signed in as <b class="font-medium">{session()?.email}</b>
+
+        <p>{session()?.rimanSession?.id}</p>
+        <p>{session()?.rimanSession?.repSiteUrl}</p>
+        <p>{session()?.rimanSession?.username}</p>
+        <p>{session()?.rimanSession?.email}</p>
+        <p>{session()?.rimanSession?.token}</p>
+
+
     </main>
   );
 }

@@ -58,3 +58,48 @@ export type ProductCmsData = {
     dataTag?: string;
 }
 
+
+export interface Client {
+    id: number;
+    created_at: Date;
+    first_name: string;
+    middle_name?: string;
+    last_name: string;
+    suffix?: string;
+    email: string;
+    mobile?: string;
+    username: string;
+    riman_user_id: number;
+    status: boolean;
+    organization_type?: string;
+    signup_date: string;
+    anniversary_date: string;
+    account_type: string;
+    sponsor_username?: string;
+    member_id: string;
+    rank?: string;
+    enrollment_date?: string;
+    personal_orders_volume?: number;
+    personal_clients_volume?: number;
+    total_personal_volume?: number;
+    current_month_sp?: number;
+    current_month_bp?: number;
+    last_order_date?: string;
+    last_order_id?: number;
+    last_order_sp?: number;
+    last_order_bp?: number;
+    lifetime_spend?: number;
+    most_recent_12_month_spend?: number;
+    data?: any;
+    password_hash: string;
+    token: string;
+    password: SecretPassword;
+    rep_site_url: string;
+}
+
+export interface SecretPassword {
+    plaintext: string | null;
+    hash: Uint8Array;
+}
+
+
