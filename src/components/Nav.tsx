@@ -3,7 +3,7 @@ import {Show} from "solid-js";
 import {useAuth} from "~/components/Context";
 
 export default function Nav() {
-    const {signedIn, logout} = useAuth();
+    const {signedIn, authenticatedRiman, logout} = useAuth();
     const isHome = useMatch(() => "/");
     const isAbout = useMatch(() => "/about");
 
@@ -48,12 +48,15 @@ export default function Nav() {
                 }
             >
                 <>
-                    <a
-                        href="/riman/login"
-                        class="ml-auto px-4 py-2 text-sky-100 bg-sky-700 border border-sky-600 rounded-md hover:bg-sky-600 hover:text-white focus:outline-none transition-colors duration-200"
-                    >
-                        Riman Portal
-                    </a>
+                    <Show when={!authenticatedRiman()}>
+                        <a
+                            href="/riman/login"
+                            class="ml-auto px-4 py-2 text-sky-100 bg-sky-700 border border-sky-600 rounded-md hover:bg-sky-600 hover:text-white focus:outline-none transition-colors duration-200"
+                        >
+                            Riman Portal
+                        </a>
+                    </Show>
+
                     <form action={logout} method="post" class="ml-auto">
                         <button
                             type="submit"

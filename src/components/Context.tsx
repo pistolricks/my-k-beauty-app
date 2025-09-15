@@ -6,6 +6,7 @@ import type { Session } from "~/auth/server";
 const Context = createContext<{
   session: AccessorWithLatest<Session | null | undefined>;
   signedIn: () => boolean;
+  authenticatedRiman: () => boolean;
   logout: typeof logout;
 }>();
 
@@ -15,9 +16,9 @@ export default function Auth(props: ParentProps) {
     deferStream: true
   });
   const signedIn = () => Boolean(session()?.id);
-
+  const authenticatedRiman = () => Boolean(session()?.rimanSession?.id);
   return (
-    <Context.Provider value={{ session, signedIn, logout }}>{props.children}</Context.Provider>
+    <Context.Provider value={{ session, signedIn, authenticatedRiman, logout }}>{props.children}</Context.Provider>
   );
 }
 
