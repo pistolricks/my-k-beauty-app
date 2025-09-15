@@ -2,7 +2,7 @@ import { action, query, redirect } from "@solidjs/router";
 import {getSession, passwordLogin, registerUser} from "./server";
 
 // Define routes that require being logged in
-const PROTECTED_ROUTES = ["/", "/riman/login", "/riman/products"];
+const PROTECTED_ROUTES = ["/", "/riman/*"];
 
 const isProtected = (path: string) =>
   PROTECTED_ROUTES.some(route =>

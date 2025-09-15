@@ -23,8 +23,8 @@ import {useAuth} from "~/components/Context";
 
 
 export const navigationMenu = [
-    {name: 'Home', href: '/', icon: HomeIcon, current: true},
-    {name: 'Orders', href: '/orders', icon: ShoppingCartIcon, current: false},
+    {name: 'Home', href: '/', icon: HomeIcon, current: false},
+    {name: 'Carts', href: '/riman/carts', icon: ShoppingCartIcon, current: false},
     {name: 'Shipping', href: '/shipping', icon: TruckIcon, current: false},
     {name: 'Products', href: '/products', icon: ShoppingBagIcon, current: false},
     {name: 'Reports', href: '/reports', icon: ChartPieIcon, current: false},
@@ -128,8 +128,8 @@ const Admin: Component<RouteSectionProps> = (props) => {
 
                                 <span
                                     class={" text-sm uppercase text-gray-500"}>{session()?.name}</span>
+                                    <div aria-hidden="true" class=" h-8 w-px bg-gray-200 mx-4"/>
 
-                                    <div aria-hidden="true" class="hidden lg:block mx-4 lg:h-6 lg:w-px lg:bg-gray-200"/>
                                     <Show
                                         fallback={<span
                                             class={"text-sm uppercase text-gray-500"}>{session()?.rimanSession?.repSiteUrl}</span>}

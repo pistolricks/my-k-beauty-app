@@ -131,7 +131,7 @@ export type RimanCart = {
     last_name?: string;
     phone?: string;
     email?: string;
-    date_modified?: Date;
+    date_modified: Date;
     sub_total?: number;
     formatted_sub_total?: string;
     tax?: number;

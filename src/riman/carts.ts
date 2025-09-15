@@ -13,7 +13,6 @@ const fetchNewCart = async (userInput: { token: string }) =>
     ).json()
 
 export const createNewCartHandler = async (token: string) => {
-
     console.log("token", token)
 
     const userInput = {
@@ -24,7 +23,6 @@ export const createNewCartHandler = async (token: string) => {
     console.log("res", res)
 
     return res;
-
 }
 
 export const getCartDetails = query(async (cart_key: string) => {
@@ -36,3 +34,27 @@ export const getCarts = query(async () => {
     const response = await fetch(`${baseUrl}/v1/carts`)
     return (await response.json()) as any;
 }, "carts");
+
+
+const fetchCartStatus = async (userInput: { token: string }, cart_key: string ) =>
+    (await fetch(`${baseUrl}/v1/shopping/carts/${cart_key}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(userInput),
+        })
+    ).json()
+
+export const cartStatusHandler = async (token: string, cart_Key: string) => {
+    console.log("token", token)
+
+    const userInput = {
+        token: token,
+    }
+    let res = await fetchCartStatus(userInput, cart_Key);
+
+    console.log("res", res)
+
+    return res;
+}

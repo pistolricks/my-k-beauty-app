@@ -1,19 +1,10 @@
-import {
-    arrowLeftOnRectangle,
-    buildingOffice,
-    buildingStorefront,
-    chevronDoubleRight,
-    cog_6Tooth as Cog6ToothIcon, cube,
-    stop,
-    userCircle,
-} from "solid-heroicons/outline";
-import logo from "/logo.png"
+import {buildingStorefront, cog_6Tooth as Cog6ToothIcon, cube, userCircle,} from "solid-heroicons/outline";
 import {Icon} from "solid-heroicons";
 import {A, useMatch} from "@solidjs/router";
 import {Component, For, Show} from "solid-js";
 import {cn} from "~/utils";
 import {navigationMenu, unauthenticatedSubMenu} from "~/components/ui/layouts/admin";
-import {arrowRightOnRectangle, chevronRight, signal} from "solid-heroicons/solid";
+import {arrowRightOnRectangle} from "solid-heroicons/solid";
 import {useAuth} from "~/components/Context";
 
 
