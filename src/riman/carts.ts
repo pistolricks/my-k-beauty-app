@@ -1,0 +1,38 @@
+import {baseUrl} from "~/app";
+import {query} from "@solidjs/router";
+import cart_key from "~/routes/riman/carts/[cart_key]";
+
+const fetchNewCart = async (userInput: { token: string }) =>
+    (await fetch(`${baseUrl}/v1/shopping/carts`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(userInput),
+        })
+    ).json()
+
+export const createNewCartHandler = async (token: string) => {
+
+    console.log("token", token)
+
+    const userInput = {
+        token: token,
+    }
+    let res = await fetchNewCart(userInput);
+
+    console.log("res", res)
+
+    return res;
+
+}
+
+export const getCartDetails = query(async (cart_key: string) => {
+    const response = await fetch(`${baseUrl}/v1/carts/${cart_key}`)
+    return (await response.json()) as any;
+}, "cart-details");
+
+export const getCarts = query(async () => {
+    const response = await fetch(`${baseUrl}/v1/carts`)
+    return (await response.json()) as any;
+}, "carts");

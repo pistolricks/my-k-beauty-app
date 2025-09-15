@@ -94,7 +94,7 @@ const Admin: Component<RouteSectionProps> = (props) => {
                     <div class={cn(
                         getSidebarOpen() ? "pl-0 sm:pl-36 lg:pl-72" : "pl-16",
                         'flex flex-row overflow-y-hidden h-16'
-                    )}>
+                        )}>
                         <header
                             class="sticky top-0 z-40 flex h-16 w-full shrink-0 items-center  border-b border-gray-200 bg-white px-4 shadow-xs sm:gap-x-6 sm:px-6 lg:pr-8">
 
@@ -195,16 +195,15 @@ const Admin: Component<RouteSectionProps> = (props) => {
                     <div class={
                         cn(
                             getSidebarOpen() ? "pl-0 sm:pl-36 lg:pl-72" : "pl-16",
-                            'flex-1 flex flex-row overflow-y-hidden'
+                            'flex flex-row overflow-y-hidden'
                         )}>
-                        <main class="flex-1">
-
-                            <DrawerContent side={"right"} contextId={'admin-drawer'} class={"bg-white"}>
+                        <DrawerContent side={"right"} contextId={'admin-drawer'} class={"bg-white"}>
 
 
-                            </DrawerContent>
+                        </DrawerContent>
+                        <main class="flex w-full">
 
-                            <div class={"overflow-hidden sm:overflow-y-auto h-full"}>
+                            <div class={"overflow-hidden w-full h-full"}>
                                 {props.children}
                             </div>
                         </main>
