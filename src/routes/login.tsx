@@ -9,10 +9,13 @@ export default function Login() {
 
     return (
         <main>
-            <Title>Sign In</Title>
-            <h1>Sign in</h1>
-            <div class="space-y-6 font-medium">
-                <PasswordLogin/>
+            <Title>Login</Title>
+            <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">
+                <h1>Login</h1>
+                <div
+                    class="bg-white px-6 py-12 shadow-sm sm:rounded-lg sm:px-12 dark:bg-gray-800/50 dark:shadow-none dark:outline dark:-outline-offset-1 dark:outline-white/10">
+                    <PasswordLogin/>
+                </div>
             </div>
         </main>
     );
@@ -48,6 +51,7 @@ function PasswordLogin() {
                     class="bg-white mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-500"
                 />
             </label>
+
             <button
                 type="submit"
                 disabled={submission.pending}
