@@ -19,18 +19,14 @@ const SectionHeading: Component<{
                         {subTitle()}
                     </p>
                 </div>
-
-                <div class="flex items-center justify-between sm:mt-0 sm:ml-6 sm:shrink-0 sm:justify-start">
-          <span
-              class="absolute top-2 right-4">
+                <span
+                    class="absolute top-2 right-6">
               <span
                   class={" inline-flex items-center rounded-full bg-green-50 px-2 py-1 text-xs font-medium text-green-700 inset-ring inset-ring-green-600/20 dark:bg-green-500/10 dark:text-green-400 dark:inset-ring-green-500/10"}>
             {status()}
                   </span>
           </span>
-                    <div class="-my-2 ml-3 inline-block text-left">
-                    </div>
-                </div>
+
             </div>
         </div>
     )
