@@ -1,4 +1,4 @@
-import {Component, For} from "solid-js";
+import {Component, For, Show} from "solid-js";
 
 import {RimanProduct} from "~/types";
 import {A} from "@solidjs/router";
@@ -34,6 +34,7 @@ const GridList: Component<{
                                         </A>
                                     </h3>
                                     <div class="flex flex-col items-center">
+                                        <Show when={product.pricing?.[0]?.formattedPrice}>
                                         <p class="sr-only">5 out of 5 stars</p>
                                         <div class="flex items-center">
                                             {[0, 1, 2, 3, 4].map((rating) => (
@@ -47,13 +48,23 @@ const GridList: Component<{
                                                 />
                                             ))}
                                         </div>
-                                        <div class={"mt-3  flex justify-start items-center"}>
-                                            ${product.pricing?.[0]?.formattedPrice}
-                                        </div>
+
+                                            <div class={"mt-3  flex justify-start items-center"}>
+                                                ${product.pricing?.[0]?.formattedPrice}
+                                            </div>
+                                        </Show>
                                     </div>
+                                    <Show
+                                        fallback={
+                                        <p class="mt-4 py-2 text-xs uppercase rounded-lg font-light text-gray-900 border border-gray-200">
+                                            View
+                                        </p>
+                                    }
+                                        when={product.pricing?.[0]?.formattedPrice}>
                                     <p class="mt-4 py-2 text-xs uppercase rounded-lg font-light text-gray-900 border border-gray-200">
                                         Add to Bag
                                     </p>
+                                    </Show>
                                 </div>
                             </div>
                         )}

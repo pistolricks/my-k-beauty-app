@@ -65,7 +65,7 @@ const Admin: Component<RouteSectionProps> = (props) => {
 
     return (
         <>
-            <div class={"min-h-screen flex flex-col h-screen"}>
+            <div class={"min-h-screen flex flex-col h-screen fixed inset-0"}>
                 {/* DIALOG */}
                 <BaseDrawer contextId={'admin-drawer'} side={"right"}>
                     {/* Static sidebar for desktop */}
