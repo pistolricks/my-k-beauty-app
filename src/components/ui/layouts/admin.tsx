@@ -133,7 +133,9 @@ const Admin: Component<RouteSectionProps> = (props) => {
                                             class={"text-sm uppercase text-gray-500"}>
 
                                             <ClipboardCopy classRoot={"text-sm uppercase"} success={"TOKEN COPIED"} value={session()?.rimanSession?.repSiteUrl}>
-                                                <span class={"uppercase text-emerald-700 size-5"}>{session()?.rimanSession?.repSiteUrl}</span>
+                                                <span class={"uppercase text-emerald-700 size-5"}>
+                                                    RIMAN
+                                                </span>
                                             </ClipboardCopy>
 
                                         </span>

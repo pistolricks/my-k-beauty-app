@@ -3,27 +3,26 @@
 import {Component, For} from "solid-js";
 
 import {cn} from "~/utils";
-import {userCircle} from "solid-heroicons/outline";
+
 import {Icon} from "solid-heroicons";
-
-const tabs = [
-    { name: 'My Account', href: '#', icon: userCircle, current: false },
-    { name: 'Company', href: '#', icon: userCircle, current: false },
-    { name: 'Team Members', href: '#', icon: userCircle, current: true },
-    { name: 'Billing', href: '#', icon: userCircle, current: false },
-]
+import {A} from "@solidjs/router";
 
 
 
-const MenuX: Component<{}> = (props) => {
+
+
+const MenuX: Component<{
+    menu: {name: string, href: string, icon: any, current: boolean}[]
+}> = (props) => {
+    const menu = () => props.menu;
     return (
         <div class={"w-full"}>
             <div class="w-full  ">
                 <div class="w-full flex justify-center items-center border-b border-gray-200 dark:border-white/10">
                     <nav aria-label="Tabs" class="-mb-px flex space-x-8">
-                        <For each={tabs}>
+                        <For each={menu()}>
                         {(tab) => (
-                            <a
+                            <A
                                 href={tab.href}
                                 aria-current={tab.current ? 'page' : undefined}
                                 class={cn(
@@ -44,7 +43,7 @@ const MenuX: Component<{}> = (props) => {
                                     )}
                                 />
                                 <span>{tab.name}</span>
-                            </a>
+                            </A>
                         )}
                         </For>
                     </nav>

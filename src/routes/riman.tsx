@@ -5,15 +5,23 @@ import {RimanPortal} from "~/components/ui/layouts/riman-portal";
 import {RimanLogo} from "~/components/Icons";
 import SectionHeading from "~/components/ui/section-heading";
 import MenuX from "~/components/ui/MenuX";
+import {userCircle} from "solid-heroicons/outline";
 
 type PROPS = {}
+const tabs = [
+    { name: 'My Account', href: '#', icon: userCircle, current: false },
+    { name: 'Company', href: '#', icon: userCircle, current: false },
+    { name: 'Team Members', href: '#', icon: userCircle, current: true },
+    { name: 'Billing', href: '#', icon: userCircle, current: false },
+]
+
 
 const RimanLayout: Component<PROPS> = props => {
     const {session, signedIn, authenticatedRiman, logout} = useAuth();
 
     return (
 
-        <main>
+        <div>
             <Title>Riman</Title>
 
 
@@ -21,7 +29,7 @@ const RimanLayout: Component<PROPS> = props => {
                 fallback={
                     <div class="sm:mx-auto sm:w-full sm:max-w-[480px]">
                         <div
-                            class="mb-2 text-center bg-white px-6 py-6 shadow-sm sm:rounded-lg sm:px-12 dark:bg-gray-800/50 dark:shadow-none dark:outline dark:-outline-offset-1 dark:outline-white/10">
+                            class="text-center bg-white px-6 py-6 shadow-sm sm:rounded-lg sm:px-12 dark:bg-gray-800/50 dark:shadow-none dark:outline dark:-outline-offset-1 dark:outline-white/10">
                             <RimanLogo class={"w-full h-full"}/>
                         </div>
                         <div
@@ -32,12 +40,13 @@ const RimanLayout: Component<PROPS> = props => {
 
                 }
                 when={authenticatedRiman()}>
-                <MenuX/>
                 <SectionHeading
-                    title={`${session()?.rimanSession?.firstName} ${session()?.rimanSession?.lastName}`}
+                    title={session()?.rimanSession?.repSiteUrl}
                     subTitle={session()?.rimanSession?.email}
                     status={authenticatedRiman() ? "ONLINE" : "OFFLINE"}
                 />
+                <MenuX menu={tabs}/>
+
 
                 <div
                     class="mb-2 text-center bg-white px-6 py-6 shadow-sm sm:rounded-lg sm:px-12 dark:bg-gray-800/50 dark:shadow-none dark:outline dark:-outline-offset-1 dark:outline-white/10">
@@ -45,7 +54,7 @@ const RimanLayout: Component<PROPS> = props => {
                 </div>
             </Show>
 
-        </main>
+        </div>
 
     );
 };
