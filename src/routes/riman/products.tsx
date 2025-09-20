@@ -12,7 +12,7 @@ const Products: Component<PROPS> = props => {
     const response = createAsync(() => getProducts(), {})
 
     return (
-        <div>
+        <div class={"h-screen overflow-y-auto rounded"}>
             <GridList products={response()?.products} />
         </div>
     );

@@ -1,5 +1,5 @@
 import { RouteSectionProps } from "@solidjs/router";
 
 export default function RimanLayout(props: RouteSectionProps) {
-    return <div>{props.children}</div>;
+    return <main>{props.children}</main>;
 }
