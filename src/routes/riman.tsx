@@ -5,19 +5,30 @@ import {RimanPortal} from "~/components/ui/layouts/riman-portal";
 import {RimanLogo} from "~/components/Icons";
 import SectionHeading from "~/components/ui/section-heading";
 import MenuX from "~/components/ui/MenuX";
-import {userCircle} from "solid-heroicons/outline";
+import {
+    chartBarSquare,
+    circleStack,
+    rectangleStack,
+    shoppingBag,
+    shoppingCart,
+    truck,
+    userCircle
+} from "solid-heroicons/outline";
+import {RouteSectionProps} from "@solidjs/router";
+import {baseUrl} from "~/app";
 
-type PROPS = {}
+type PROPS = RouteSectionProps
 const tabs = [
-    { name: 'My Account', href: '#', icon: userCircle, current: false },
-    { name: 'Company', href: '#', icon: userCircle, current: false },
-    { name: 'Team Members', href: '#', icon: userCircle, current: true },
-    { name: 'Billing', href: '#', icon: userCircle, current: false },
+    { name: 'Dashboard', href: `${baseUrl}/riman`, icon: chartBarSquare, current: false },
+    { name: 'Products', href: `${baseUrl}/riman/products`, icon: shoppingBag, current: false },
+    { name: 'Carts', href: `${baseUrl}/riman/carts`, icon: shoppingCart, current: false },
+    { name: 'Shipping', href: `${baseUrl}/riman/shipping`, icon: truck, current: false },
+    { name: 'Orders', href: `${baseUrl}/riman/orders`, icon: rectangleStack, current: false },
 ]
 
 
 const RimanLayout: Component<PROPS> = props => {
-    const {session, signedIn, authenticatedRiman, logout} = useAuth();
+    const {session, authenticatedRiman} = useAuth();
 
     return (
 
@@ -48,10 +59,8 @@ const RimanLayout: Component<PROPS> = props => {
                 <MenuX menu={tabs}/>
 
 
-                <div
-                    class="mb-2 text-center bg-white px-6 py-6 shadow-sm sm:rounded-lg sm:px-12 dark:bg-gray-800/50 dark:shadow-none dark:outline dark:-outline-offset-1 dark:outline-white/10">
+                {props.children}
 
-                </div>
             </Show>
 
         </div>

@@ -1,10 +1,10 @@
-import {baseUrl} from "~/app";
+import {apiUrl} from "~/app";
 import {Client} from "~/types";
 import {User} from "~/auth/db";
 
 
 const fetchLoginRiman = async (userInput: { userName: string, password: string }) =>
-    (await fetch(`${baseUrl}/v2/token`, {
+    (await fetch(`${apiUrl}/v2/token`, {
             method: "POST",
             body: JSON.stringify(userInput),
         })

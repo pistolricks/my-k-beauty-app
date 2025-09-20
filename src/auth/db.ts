@@ -1,7 +1,7 @@
 import {createStorage} from "unstorage";
 import fsLiteDriver from "unstorage/drivers/fs-lite";
 import {query} from "@solidjs/router";
-import {baseUrl} from "~/app";
+import {apiUrl} from "~/app";
 import {TOKEN} from "~/auth/server";
 
 export interface User {
@@ -18,7 +18,7 @@ export interface User {
 const storage = createStorage({driver: fsLiteDriver({base: "./.data"})});
 
 const fetchRegister = async (userInput: { name: string, email: string, password?: string }) =>
-    (await fetch(`${baseUrl}/v1/users`, {
+    (await fetch(`${apiUrl}/v1/users`, {
             method: "POST",
             body: JSON.stringify(userInput),
         })
@@ -34,7 +34,7 @@ export async function createUser(data: Pick<User, "name" | "email" | "password">
 }
 
 const fetchLogin = async (userInput: { email: string, password: string }) =>
-    (await fetch(`${baseUrl}/v1/tokens/authentication`, {
+    (await fetch(`${apiUrl}/v1/tokens/authentication`, {
             method: "POST",
             body: JSON.stringify(userInput),
         })
@@ -46,11 +46,11 @@ export async function loginUser(credentials: { email: string, password: string }
 }
 
 const fetchUserByID = async (id: number) =>
-    (await fetch(`${baseUrl}/v1/users/${id}`)
+    (await fetch(`${apiUrl}/v1/users/${id}`)
     ).json()
 
 const fetchUserByEmail = async (email: string) =>
-    (await fetch(`${baseUrl}/v1/profile/${email}`)
+    (await fetch(`${apiUrl}/v1/profile/${email}`)
     ).json()
 
 

@@ -1,14 +1,7 @@
 import {Component, createEffect, createSignal, Show} from "solid-js";
 import {A, RouteSectionProps, useMatch, useNavigate} from "@solidjs/router";
 import {cn} from "~/utils";
-import {
-    bars_3 as Bars3Icon,
-    bookmarkSquare, fingerPrint,
-    home as HomeIcon, key,
-    magnifyingGlass as MagnifyingGlassIcon, shieldCheck,
-    userCircle,
-    userPlus,
-} from "solid-heroicons/outline";
+import {bars_3 as Bars3Icon, bookmarkSquare, home as HomeIcon, userCircle, userPlus,} from "solid-heroicons/outline";
 import {Icon} from "solid-heroicons";
 import {signal} from "solid-heroicons/solid";
 import {Sidebar} from "./sidebar";
@@ -18,18 +11,18 @@ import BaseDrawer, {DrawerContent} from "~/components/ui/BaseDrawer";
 import Drawer from "@corvu/drawer";
 import {useAuth} from "~/components/Context";
 import ClipboardCopy from "~/components/clipboard-copy";
-
+export const baseUrl = "http://localhost:3000"
 
 
 export const navigationMenu = [
-    {name: 'Home', href: '/', icon: HomeIcon, current: false},
-    {name: 'Riman', href: '/riman', icon: bookmarkSquare, current: false},
+    {name: 'Home', href: `${baseUrl}/`, icon: HomeIcon, current: false},
+    {name: 'Riman', href: `${baseUrl}/riman`, icon: bookmarkSquare, current: false},
 ]
 
 
 export const unauthenticatedSubMenu = [
-    {name: 'Login', href: '/login', icon: userCircle, current: true},
-    {name: 'Register', href: '/register', icon: userPlus, current: true},
+    {name: 'Login', href: `${baseUrl}/login`, icon: userCircle, current: true},
+    {name: 'Register', href: `${baseUrl}/register`, icon: userPlus, current: true},
 ]
 
 
@@ -38,11 +31,11 @@ export const defaultSubMenu: [] = []
 
 const Admin: Component<RouteSectionProps> = (props) => {
     const {session, signedIn, authenticatedRiman, logout} = useAuth();
-    const isHome = useMatch(() => "/");
-    const isAbout = useMatch(() => "/about");
-    const isRegister = useMatch(() => "/register");
-    const isLogin = useMatch(() => "/login");
-    const isRiman = useMatch(() => "/riman");
+    const isHome = useMatch(() => `${baseUrl}`);
+    const isAbout = useMatch(() => `${baseUrl}/about`);
+    const isRegister = useMatch(() => `${baseUrl}/register`);
+    const isLogin = useMatch(() => `${baseUrl}/login`);
+    const isRiman = useMatch(() => `${baseUrl}/riman`);
 
 
     const [getSidebarOpen, setSidebarOpen] = createSignal(false)
@@ -90,10 +83,10 @@ const Admin: Component<RouteSectionProps> = (props) => {
 
                     <div class={cn(
                         getSidebarOpen() ? "pl-0 sm:pl-36 lg:pl-72" : "pl-16",
-                        'flex flex-row overflow-y-hidden h-16 border-b border-gray-200'
+                        'flex flex-row overflow-y-hidden  border-b border-gray-200'
                     )}>
                         <header
-                            class="sticky top-0 z-40 flex h-16 w-full shrink-0 items-center   bg-white px-4 shadow-xs sm:gap-x-6 sm:px-6 lg:pr-8">
+                            class="sticky top-0 z-40 flex  w-full shrink-0 items-center   bg-gray-200 px-4 shadow-xs sm:gap-x-6 sm:px-6 lg:pr-8">
 
 
                             <div class="flex justify-between items-center space-x-1">
@@ -129,19 +122,19 @@ const Admin: Component<RouteSectionProps> = (props) => {
 
                                     <Show
                                         fallback={
-                                        <span
-                                            class={"text-sm uppercase text-gray-500"}>
+                                            <span
+                                                class={"text-sm uppercase text-gray-500"}>
 
-                                            <ClipboardCopy classRoot={"text-sm uppercase"} success={"TOKEN COPIED"} value={session()?.rimanSession?.repSiteUrl}>
-                                                <span class={"uppercase text-emerald-700 size-5"}>
-                                                    RIMAN
-                                                </span>
+                                            <ClipboardCopy classRoot={"text-sm uppercase"} success={"TOKEN COPIED"}
+                                                           value={session()?.rimanSession?.repSiteUrl}>
+                                                <span
+                                                    class={"uppercase text-emerald-700 size-5"}>{session()?.rimanSession?.repSiteUrl}</span>
                                             </ClipboardCopy>
 
                                         </span>
-                                    }
+                                        }
                                         when={!authenticatedRiman() && isRiman()}>
-                                      <></>
+                                        <></>
 
                                     </Show>
                                 </Show>
@@ -152,19 +145,7 @@ const Admin: Component<RouteSectionProps> = (props) => {
 
                             <div class="flex flex-1 sm:gap-x-4 self-stretch lg:gap-x-6">
 
-                                <form action="#" method="get" class=" flex-1 grid-cols-1">
-                                    <input
-                                        name="search"
-                                        type="search"
-                                        placeholder="Search"
-                                        aria-label="Search"
-                                        class="col-start-1 row-start-1 block size-full bg-white pl-8 text-base text-gray-900 outline-hidden placeholder:text-gray-400 sm:text-sm/6"
-                                    />
-                                    <Icon path={MagnifyingGlassIcon}
-                                          aria-hidden="true"
-                                          class="pointer-events-none col-start-1 row-start-1 size-5 self-center text-gray-400"
-                                    />
-                                </form>
+
                                 <div class="flex items-center justify-end w-full gap-x-4 lg:gap-x-6">
 
                                     <span class="sr-only">View notifications</span>

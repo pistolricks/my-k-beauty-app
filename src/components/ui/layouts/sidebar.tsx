@@ -18,13 +18,6 @@ type PROPS = {
 
 export const Sidebar: Component<PROPS> = (props) => {
     const {session, signedIn, authenticatedRiman, logout} = useAuth();
-    const isHome = useMatch(() => "/");
-    const isAbout = useMatch(() => "/about");
-
-    const rid = () => props.rid;
-    const store = () => props.store;
-    const isOpen = () => props.isOpen
-    const isConnected = () => props.isConnected;
 
 
     return (

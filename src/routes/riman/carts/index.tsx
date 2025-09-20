@@ -42,7 +42,7 @@ const Carts: Component<PROPS> = props => {
     })
 
     return (
-        <div>
+        <div class={"h-screen overflow-y-auto rounded scrollbar-hide"}>
             <div class={"w-full py-4"}>
                 <CartPanel actionMessage={"CREATE"} message={"Create a new cart instance."} onClick={createCart}/>
             </div>
@@ -106,7 +106,7 @@ export const CartList: Component<{
             <Show when={carts()?.length > 0}>
                 <For each={carts().reverse()}>
                     {(cart) => (
-                        <li class="flex items-center justify-between gap-x-6 py-5w-full bg-white shadow sm:rounded-xs dark:bg-gray-800/50 dark:shadow-none dark:outline dark:-outline-offset-1 dark:outline-white/10">
+                        <li class="flex items-center justify-between gap-x-6 py-5 w-full bg-white shadow sm:rounded-xs dark:bg-gray-800/50 dark:shadow-none dark:outline dark:-outline-offset-1 dark:outline-white/10">
 
                             <div class="px-4 py-5 sm:p-6">
                                 <div class="min-w-0">

@@ -8,7 +8,8 @@ import ErrorNotification from "./components/Error";
 import "./app.css";
 import Admin from "~/components/ui/layouts/admin";
 
-export const baseUrl = "http://localhost:4020"
+export const apiUrl = "http://localhost:4020"
+export const baseUrl = "http://localhost:3000"
 export const route: RouteDefinition = {
     preload: ({location}) => querySession(location.pathname)
 };
