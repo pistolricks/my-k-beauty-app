@@ -12,6 +12,9 @@ export interface RimanSession {
     id: number;
     repSiteUrl: string;
     username: string;
+    firstName: string;
+    lastName: string;
+    rid: number;
     email: string;
     token: string;
 

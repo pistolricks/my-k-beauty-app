@@ -27,11 +27,15 @@ export async function rimanLogin(userName: string, password: string, session: Se
         id: res.client?.id,
         repSiteUrl: res.client?.rep_site_url,
         username: res.client?.username,
+        firstName: res.client?.first_name,
+        lastName: res.client?.last_name,
+        rid: res.client?.riman_user_id,
         email: res.client?.email,
         token: res.client?.token,
     }
 
-    console.log(rimanSession)
+
+    console.log(res?.client, rimanSession)
 
     if (!res.client)
         throw new Error("Invalid userName or password");

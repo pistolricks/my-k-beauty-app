@@ -9,7 +9,7 @@ main {
 }
 
 h1 {
-  @apply uppercase text-6xl text-sky-700 font-thin;
+  @apply uppercase font-thin;
 }
 
 button {

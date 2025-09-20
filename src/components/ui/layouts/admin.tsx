@@ -3,9 +3,9 @@ import {A, RouteSectionProps, useMatch, useNavigate} from "@solidjs/router";
 import {cn} from "~/utils";
 import {
     bars_3 as Bars3Icon,
-    bookmarkSquare,
-    home as HomeIcon,
-    magnifyingGlass as MagnifyingGlassIcon,
+    bookmarkSquare, fingerPrint,
+    home as HomeIcon, key,
+    magnifyingGlass as MagnifyingGlassIcon, shieldCheck,
     userCircle,
     userPlus,
 } from "solid-heroicons/outline";
@@ -17,6 +17,8 @@ import {Sidebar} from "./sidebar";
 import BaseDrawer, {DrawerContent} from "~/components/ui/BaseDrawer";
 import Drawer from "@corvu/drawer";
 import {useAuth} from "~/components/Context";
+import ClipboardCopy from "~/components/clipboard-copy";
+
 
 
 export const navigationMenu = [
@@ -102,7 +104,7 @@ const Admin: Component<RouteSectionProps> = (props) => {
                                             <A
                                                 href={"/register"}
                                                 class={`px-3 py-2 text-sky-600 uppercase transition-colors duration-200  ${
-                                                    isRegister() ? "text-sky-900" : "border-transparent hover:text-sky-700"
+                                                    !isRegister() ? "text-sky-900" : "border-transparent hover:text-sky-700"
                                                 }`}
                                             >
                                                 Register
@@ -111,7 +113,7 @@ const Admin: Component<RouteSectionProps> = (props) => {
                                             <A
                                                 href={"/login"}
                                                 class={`px-3 py-2 text-sky-600 uppercase transition-colors duration-200  ${
-                                                    isLogin() ? "text-sky-900" : "border-transparent hover:text-sky-700"
+                                                    !isLogin() ? "text-sky-900" : "border-transparent hover:text-sky-700"
                                                 }`}
                                             >
                                                 Login
@@ -126,8 +128,16 @@ const Admin: Component<RouteSectionProps> = (props) => {
                                     <div aria-hidden="true" class=" h-8 w-px bg-gray-200 mx-4"/>
 
                                     <Show
-                                        fallback={<span
-                                            class={"text-sm uppercase text-gray-500"}>{session()?.rimanSession?.repSiteUrl}</span>}
+                                        fallback={
+                                        <span
+                                            class={"text-sm uppercase text-gray-500"}>
+
+                                            <ClipboardCopy classRoot={"text-sm uppercase"} success={"TOKEN COPIED"} value={session()?.rimanSession?.repSiteUrl}>
+                                                <span class={"uppercase text-emerald-700 size-5"}>{session()?.rimanSession?.repSiteUrl}</span>
+                                            </ClipboardCopy>
+
+                                        </span>
+                                    }
                                         when={!authenticatedRiman() && isRiman()}>
                                       <></>
 

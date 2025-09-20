@@ -17,10 +17,10 @@ export function RimanPortal() {
                     id="userName"
                     name="userName"
                     type="text"
-                    autocomplete="userName"
-                    placeholder="userName"
+                    autocomplete="username"
+                    placeholder="username"
                     required
-                    class="bg-white mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-500"
+                    class="bg-white mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
                 />
             </label>
             <label for="password" class="block text-left w-full">
@@ -33,15 +33,15 @@ export function RimanPortal() {
                     placeholder="••••••••"
                     minLength={6}
                     required
-                    class="bg-white mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-sky-500"
+                    class="bg-white mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
                 />
             </label>
             <button
                 type="submit"
                 disabled={submission.pending}
-                class="w-full px-4 py-2 bg-gradient-to-r from-sky-600 to-blue-600 text-white rounded-lg hover:from-sky-700 hover:to-blue-700 focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-300 shadow-lg shadow-sky-500/25"
+                class="w-full px-4 py-2 bg-gradient-to-r from-[#3c544b] to-emerald-900 text-white rounded-lg hover:from-emerald-700 hover:to-[#3c544b] focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-300 shadow-lg shadow-sky-500/25"
             >
-                Submit
+                LOGIN
             </button>
             <Show when={submission.error} keyed>
                 {({message}) => <p class="text-red-600 mt-2 text-xs text-center">{message}</p>}

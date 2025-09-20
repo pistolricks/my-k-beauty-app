@@ -1,3 +1,5 @@
+import {JSX} from "solid-js";
+
 export type  RimanProduct = {
     productPK?: number;
     productCode?: string;
@@ -169,4 +171,15 @@ export type RimanCart = {
     billing_address?: any;
     formatted_autoship_subtotal?: string;
     cart_items?: any;
+}
+
+export interface IconProps extends JSX.SvgSVGAttributes<SVGSVGElement> {
+    /**
+     * This is the path of the SVG
+     */
+    path: {
+        path: JSX.Element;
+        outline?: boolean;
+        mini?: boolean;
+    };
 }
