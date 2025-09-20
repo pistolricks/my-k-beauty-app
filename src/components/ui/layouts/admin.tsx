@@ -3,12 +3,9 @@ import {A, RouteSectionProps, useMatch, useNavigate} from "@solidjs/router";
 import {cn} from "~/utils";
 import {
     bars_3 as Bars3Icon,
-    chartPie as ChartPieIcon,
+    bookmarkSquare,
     home as HomeIcon,
     magnifyingGlass as MagnifyingGlassIcon,
-    shoppingBag as ShoppingBagIcon,
-    shoppingCart as ShoppingCartIcon,
-    truck as TruckIcon,
     userCircle,
     userPlus,
 } from "solid-heroicons/outline";
@@ -24,11 +21,9 @@ import {useAuth} from "~/components/Context";
 
 export const navigationMenu = [
     {name: 'Home', href: '/', icon: HomeIcon, current: false},
-    {name: 'Carts', href: '/riman/carts', icon: ShoppingCartIcon, current: false},
-    {name: 'Shipping', href: '/shipping', icon: TruckIcon, current: false},
-    {name: 'Products', href: '/products', icon: ShoppingBagIcon, current: false},
-    {name: 'Reports', href: '/reports', icon: ChartPieIcon, current: false},
+    {name: 'Riman', href: '/riman', icon: bookmarkSquare, current: false},
 ]
+
 
 export const unauthenticatedSubMenu = [
     {name: 'Login', href: '/login', icon: userCircle, current: true},
@@ -45,7 +40,7 @@ const Admin: Component<RouteSectionProps> = (props) => {
     const isAbout = useMatch(() => "/about");
     const isRegister = useMatch(() => "/register");
     const isLogin = useMatch(() => "/login");
-    const isRimanLogin = useMatch(() => "/riman/login");
+    const isRiman = useMatch(() => "/riman");
 
 
     const [getSidebarOpen, setSidebarOpen] = createSignal(false)
@@ -93,10 +88,10 @@ const Admin: Component<RouteSectionProps> = (props) => {
 
                     <div class={cn(
                         getSidebarOpen() ? "pl-0 sm:pl-36 lg:pl-72" : "pl-16",
-                        'flex flex-row overflow-y-hidden h-16'
-                        )}>
+                        'flex flex-row overflow-y-hidden h-16 border-b border-gray-200'
+                    )}>
                         <header
-                            class="sticky top-0 z-40 flex h-16 w-full shrink-0 items-center  border-b border-gray-200 bg-white px-4 shadow-xs sm:gap-x-6 sm:px-6 lg:pr-8">
+                            class="sticky top-0 z-40 flex h-16 w-full shrink-0 items-center   bg-white px-4 shadow-xs sm:gap-x-6 sm:px-6 lg:pr-8">
 
 
                             <div class="flex justify-between items-center space-x-1">
@@ -133,16 +128,8 @@ const Admin: Component<RouteSectionProps> = (props) => {
                                     <Show
                                         fallback={<span
                                             class={"text-sm uppercase text-gray-500"}>{session()?.rimanSession?.repSiteUrl}</span>}
-                                        when={!authenticatedRiman()}>
-                                        <A
-                                            href={"/riman/login"}
-                                            class={`px-3 text-sm py-2 text-sky-600 uppercase transition-colors duration-200  ${
-                                                isRimanLogin() ? "text-sky-900" : "border-transparent hover:text-sky-700"
-                                            }`}
-                                        >
-                                            Riman Portal
-                                        </A>
-
+                                        when={!authenticatedRiman() && isRiman()}>
+                                      <></>
 
                                     </Show>
                                 </Show>
@@ -150,8 +137,6 @@ const Admin: Component<RouteSectionProps> = (props) => {
 
                             {/* Separator */}
 
-
-                            <div aria-hidden="true" class=" h-8 w-px bg-gray-200"/>
 
                             <div class="flex flex-1 sm:gap-x-4 self-stretch lg:gap-x-6">
 

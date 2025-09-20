@@ -1,11 +1,11 @@
 @import "tailwindcss";
 
 #app {
-  user-select: none;
+
 }
 
 main {
-  @apply flex flex-col items-center justify-center min-h-screen bg-gray-50 gap-8 px-4;
+  @apply flex flex-col items-center  min-h-screen bg-gray-50 gap-8 p-2;
 }
 
 h1 {

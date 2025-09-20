@@ -35,6 +35,6 @@ export async function rimanLogin(userName: string, password: string, session: Se
 
     if (!res.client)
         throw new Error("Invalid userName or password");
-    else return createRimanSession(session, rimanSession);
+    else return createRimanSession(session, rimanSession, "/riman");
 
 }

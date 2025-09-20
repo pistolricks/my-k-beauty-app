@@ -11,7 +11,10 @@ export default function Login() {
         <main>
             <Title>Login</Title>
             <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">
-                <h1>Login</h1>
+                <div
+                    class="mb-2 text-center bg-white px-6 py-6 shadow-sm sm:rounded-lg sm:px-12 dark:bg-gray-800/50 dark:shadow-none dark:outline dark:-outline-offset-1 dark:outline-white/10">
+                    <h1>Login</h1>
+                </div>
                 <div
                     class="bg-white px-6 py-12 shadow-sm sm:rounded-lg sm:px-12 dark:bg-gray-800/50 dark:shadow-none dark:outline dark:-outline-offset-1 dark:outline-white/10">
                     <PasswordLogin/>
