@@ -1,20 +1,30 @@
 
 
-import {Component, For} from "solid-js";
+import {Component, createEffect, For} from "solid-js";
 
 import {cn} from "~/utils";
 
 import {Icon} from "solid-heroicons";
 import {A} from "@solidjs/router";
+import {baseUrl} from "~/app";
 
 
 
 
 
 const MenuX: Component<{
-    menu: {name: string, href: string, icon: any, current: boolean}[]
+    menu: {name: string, path: string, href: string, icon: any, current: boolean}[]
 }> = (props) => {
+
+
     const menu = () => props.menu;
+
+
+    createEffect(() => {
+        console.log("menu", menu())
+    })
+
+
     return (
         <div class={"w-full bg-white"}>
             <div class="w-full">
@@ -23,7 +33,7 @@ const MenuX: Component<{
                         <For each={menu()}>
                         {(tab) => (
                             <A
-                                href={tab.href}
+                                href={`${baseUrl}${tab.path}${tab.href}`}
                                 aria-current={tab.current ? 'page' : undefined}
                                 class={cn(
                                     tab.current

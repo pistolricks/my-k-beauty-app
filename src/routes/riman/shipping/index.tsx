@@ -6,7 +6,7 @@ const Shipping: Component<PROPS> = props => {
 
 
     return (
-        <div class={"h-screen overflow-y-auto rounded scrollbar-hide"}>
+        <div class={""}>
 
 
         </div>

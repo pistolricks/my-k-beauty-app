@@ -1,4 +1,4 @@
-import {Component, Show} from "solid-js";
+import {Component, createEffect, createMemo, Show} from "solid-js";
 import {useAuth} from "~/components/Context";
 import {Title} from "@solidjs/meta";
 import {RimanPortal} from "~/components/ui/layouts/riman-portal";
@@ -14,21 +14,43 @@ import {
     truck,
     userCircle
 } from "solid-heroicons/outline";
-import {RouteSectionProps} from "@solidjs/router";
-import {baseUrl} from "~/app";
+import {RouteSectionProps, useMatch} from "@solidjs/router";
+
 
 type PROPS = RouteSectionProps
-const tabs = [
-    { name: 'Dashboard', href: `${baseUrl}/riman`, icon: chartBarSquare, current: false },
-    { name: 'Products', href: `${baseUrl}/riman/products`, icon: shoppingBag, current: false },
-    { name: 'Carts', href: `${baseUrl}/riman/carts`, icon: shoppingCart, current: false },
-    { name: 'Shipping', href: `${baseUrl}/riman/shipping`, icon: truck, current: false },
-    { name: 'Orders', href: `${baseUrl}/riman/orders`, icon: rectangleStack, current: false },
-]
+
+
+
+
+
 
 
 const RimanLayout: Component<PROPS> = props => {
     const {session, authenticatedRiman} = useAuth();
+
+    const isDashboard = useMatch(() => "/riman/dashboard");
+    const isProducts = useMatch(() => `/riman/products`);
+    const isCarts = useMatch(() => `/riman/carts`);
+    const isShipping = useMatch(() => `/riman/shipping`);
+    const isOrders = useMatch(() => `/riman/orders`);
+
+
+    createEffect(() => {
+        console.log(isDashboard())
+        console.log(isProducts())
+        console.log(isCarts())
+        console.log(isShipping())
+        console.log(isOrders())
+    })
+
+
+    const tabs = createMemo(() => [
+        { name: 'Dashboard', path: '/riman',  href: `/dashboard`, icon: chartBarSquare, current: !!isDashboard() },
+        { name: 'Products', path: '/riman', href: `/products`, icon: shoppingBag, current: !!isProducts() },
+        { name: 'Carts', path: '/riman', href: `/carts`, icon: shoppingCart, current: !!isCarts() },
+        { name: 'Shipping', path: '/riman', href: `/shipping`, icon: truck, current: !!isShipping() },
+        { name: 'Orders', path: '/riman', href: `/orders`, icon: rectangleStack, current: !!isOrders() },
+    ])
 
     return (
 
@@ -56,7 +78,8 @@ const RimanLayout: Component<PROPS> = props => {
                     subTitle={session()?.rimanSession?.email}
                     status={authenticatedRiman() ? "ONLINE" : "OFFLINE"}
                 />
-                <MenuX menu={tabs}/>
+
+                <MenuX  menu={tabs()}/>
 
 
                 {props.children}

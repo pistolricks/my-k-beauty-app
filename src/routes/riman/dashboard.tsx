@@ -3,7 +3,7 @@ import {RouteSectionProps} from "@solidjs/router";
 
 type PROPS = RouteSectionProps
 
-const ProductsLayout: Component<PROPS> = props => {
+const DashboardLayout: Component<PROPS> = props => {
 
 
     return (
@@ -15,4 +15,4 @@ const ProductsLayout: Component<PROPS> = props => {
     );
 };
 
-export default ProductsLayout;
+export default DashboardLayout;

@@ -1,9 +1,6 @@
-import {Title} from "@solidjs/meta";
 import {useSubmission} from "@solidjs/router";
 import {Show} from "solid-js";
 import {rimanLoginForm} from "~/riman";
-
-
 
 
 export function RimanPortal() {

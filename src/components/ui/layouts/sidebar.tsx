@@ -1,12 +1,23 @@
-import {buildingStorefront, cog_6Tooth as Cog6ToothIcon, cube, userCircle,} from "solid-heroicons/outline";
+import {
+    buildingStorefront,
+    cog_6Tooth as Cog6ToothIcon,
+    cube,
+    home as HomeIcon,
+    userCircle,
+} from "solid-heroicons/outline";
 import {Icon} from "solid-heroicons";
 import {A, useMatch} from "@solidjs/router";
 import {Component, For, Show} from "solid-js";
 import {cn} from "~/utils";
-import {navigationMenu, unauthenticatedSubMenu} from "~/components/ui/layouts/admin";
+
 import {arrowRightOnRectangle} from "solid-heroicons/solid";
 import {useAuth} from "~/components/Context";
 
+import {IconProps} from "~/types";
+
+export type MenuItem = {
+    name: string, href: string, icon: IconProps[ 'path'], current: boolean
+}
 
 type PROPS = {
     rid: string,
@@ -14,11 +25,15 @@ type PROPS = {
     isConnected: "connected" | "connecting" | "disconnected",
     onClick: () => void
     isOpen: boolean
+    authenticated: MenuItem[]
+    unauthenticated: MenuItem[]
 }
 
 export const Sidebar: Component<PROPS> = (props) => {
     const {session, signedIn, authenticatedRiman, logout} = useAuth();
 
+    const authenticatedSubMenu = () => props.authenticated;
+    const unauthenticatedSubMenu = () => props.unauthenticated;
 
     return (
         <>
@@ -37,7 +52,7 @@ export const Sidebar: Component<PROPS> = (props) => {
                     <ul role="list" class="flex flex-col items-center gap-y-7 h-full">
                         <li>
                             <ul role="list" class="-mx-2 space-y-1">
-                                <For each={signedIn() ? navigationMenu : unauthenticatedSubMenu}>
+                                <For each={signedIn() ? authenticatedSubMenu() : unauthenticatedSubMenu()}>
                                     {(item) => (
                                         <li>
                                             <A

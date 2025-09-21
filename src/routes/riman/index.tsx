@@ -1,7 +1,8 @@
 import {Component} from "solid-js";
 import {Title} from "@solidjs/meta";
+import {RouteSectionProps} from "@solidjs/router";
 
-type PROPS = {}
+type PROPS = RouteSectionProps
 
 const Riman: Component<PROPS> = props => {
 
@@ -11,6 +12,7 @@ const Riman: Component<PROPS> = props => {
         <main>
             <Title>Riman</Title>
 
+            {props.children}
 
         </main>
 

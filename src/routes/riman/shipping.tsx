@@ -1,34 +1,20 @@
 import {Component} from "solid-js";
-import {createAsync} from "@solidjs/router";
-import {
-    getBestSellers,
-    getBrandSpotlight,
-    getFeaturedProducts,
-    getFunctions, getLovedProducts,
-    getProducts, getRemainingProducts, getRitual,
-    getSelections, getSubCategories
-} from "~/riman/products";
-import GridList from "~/components/products/GridList";
+import {createAsync, RouteSectionProps} from "@solidjs/router";
+import {getBestSellers, getFeaturedProducts, getProducts} from "~/riman/products";
 
-type PROPS = {}
+type PROPS = RouteSectionProps
 
-const Products: Component<PROPS> = props => {
+const ShippingLayout: Component<PROPS> = props => {
 
-    const all = createAsync(() => getProducts(), {})
-    const featured = createAsync(() => getFeaturedProducts(), {})
-    const bestSellers = createAsync(() => getBestSellers(), {})
 
 
     return (
         <div class={"h-screen overflow-y-auto rounded scrollbar-hide"}>
 
-
-
-
-
+            {props.children}
 
         </div>
     );
 };
 
-export default Products;
+export default ShippingLayout;

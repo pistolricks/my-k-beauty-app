@@ -11,19 +11,26 @@ import BaseDrawer, {DrawerContent} from "~/components/ui/BaseDrawer";
 import Drawer from "@corvu/drawer";
 import {useAuth} from "~/components/Context";
 import ClipboardCopy from "~/components/clipboard-copy";
+
 export const baseUrl = "http://localhost:3000"
 
 
-export const navigationMenu = [
-    {name: 'Home', href: `${baseUrl}/`, icon: HomeIcon, current: false},
-    {name: 'Riman', href: `${baseUrl}/riman`, icon: bookmarkSquare, current: false},
-]
+function paths() {
+    const isHome = useMatch(() => "");
+    const isAbout = useMatch(() => `/about`);
+    const isRegister = useMatch(() => `/register`);
+    const isLogin = useMatch(() => `/login`);
+    const isRiman = useMatch(() => `/riman`);
 
+    return {
+        isHome: isHome(),
+        isAbout: isAbout(),
+        isRegister: isRegister(),
+        isLogin: isLogin(),
+        isRiman: isRiman(),
+    }
 
-export const unauthenticatedSubMenu = [
-    {name: 'Login', href: `${baseUrl}/login`, icon: userCircle, current: true},
-    {name: 'Register', href: `${baseUrl}/register`, icon: userPlus, current: true},
-]
+}
 
 
 export const defaultSubMenu: [] = []
@@ -31,12 +38,17 @@ export const defaultSubMenu: [] = []
 
 const Admin: Component<RouteSectionProps> = (props) => {
     const {session, signedIn, authenticatedRiman, logout} = useAuth();
-    const isHome = useMatch(() => `${baseUrl}`);
-    const isAbout = useMatch(() => `${baseUrl}/about`);
-    const isRegister = useMatch(() => `${baseUrl}/register`);
-    const isLogin = useMatch(() => `${baseUrl}/login`);
-    const isRiman = useMatch(() => `${baseUrl}/riman`);
 
+    const authenticated = [
+        {name: 'Home', href: `${baseUrl}/`, icon: HomeIcon, current: !!paths()?.isHome},
+        {name: 'Riman', href: `${baseUrl}/riman`, icon: bookmarkSquare, current: !!paths()?.isRiman},
+    ]
+
+
+    const unauthenticated = [
+        {name: 'Login', href: `${baseUrl}/login`, icon: userCircle, current: !!paths()?.isLogin},
+        {name: 'Register', href: `${baseUrl}/register`, icon: userPlus, current: !!paths()?.isRegister},
+    ]
 
     const [getSidebarOpen, setSidebarOpen] = createSignal(false)
 
@@ -50,6 +62,12 @@ const Admin: Component<RouteSectionProps> = (props) => {
     createEffect(() => {
         console.log("getMode", getMode())
 
+
+        console.log("isHome", paths()?.isHome)
+        console.log("isAbout", paths()?.isAbout)
+        console.log("isRegister", paths()?.isRegister)
+        console.log("isLogin", paths()?.isLogin)
+        console.log("isRiman", paths()?.isRiman)
 
         console.log("getSidebarOpen", getSidebarOpen())
 
@@ -76,6 +94,8 @@ const Admin: Component<RouteSectionProps> = (props) => {
                             isConnected={authenticatedRiman() ? "connected" : "disconnected"}
                             store={`${session()?.rimanSession?.repSiteUrl}`}
                             rid={`${session()?.rimanSession?.username}`}
+                            authenticated={authenticated}
+                            unauthenticated={unauthenticated}
                         />
                         {/* Sidebar component, swap this element with another sidebar if you like */}
 
@@ -86,7 +106,7 @@ const Admin: Component<RouteSectionProps> = (props) => {
                         'flex flex-row overflow-y-hidden  border-b border-gray-200'
                     )}>
                         <header
-                            class="sticky top-0 z-40 flex  w-full shrink-0 items-center   bg-gray-200 px-4 shadow-xs sm:gap-x-6 sm:px-6 lg:pr-8">
+                            class="sticky top-0 z-40 flex  w-full shrink-0 items-center   bg-gray-200 px-4 py-2 shadow-xs sm:gap-x-6 sm:px-6 lg:pr-8">
 
 
                             <div class="flex justify-between items-center space-x-1">
@@ -97,7 +117,7 @@ const Admin: Component<RouteSectionProps> = (props) => {
                                             <A
                                                 href={"/register"}
                                                 class={`px-3 py-2 text-sky-600 uppercase transition-colors duration-200  ${
-                                                    !isRegister() ? "text-sky-900" : "border-transparent hover:text-sky-700"
+                                                    !paths()?.isRegister ? "text-sky-900" : "border-transparent hover:text-sky-700"
                                                 }`}
                                             >
                                                 Register
@@ -106,7 +126,7 @@ const Admin: Component<RouteSectionProps> = (props) => {
                                             <A
                                                 href={"/login"}
                                                 class={`px-3 py-2 text-sky-600 uppercase transition-colors duration-200  ${
-                                                    !isLogin() ? "text-sky-900" : "border-transparent hover:text-sky-700"
+                                                    !paths()?.isLogin ? "text-sky-900" : "border-transparent hover:text-sky-700"
                                                 }`}
                                             >
                                                 Login
@@ -133,7 +153,7 @@ const Admin: Component<RouteSectionProps> = (props) => {
 
                                         </span>
                                         }
-                                        when={!authenticatedRiman() && isRiman()}>
+                                        when={!authenticatedRiman() && paths()?.isRiman}>
                                         <></>
 
                                     </Show>

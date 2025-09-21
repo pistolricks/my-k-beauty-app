@@ -2,7 +2,7 @@ import {Component} from "solid-js";
 
 type PROPS = {}
 
-const Orders: Component<PROPS> = props => {
+const Dashboard: Component<PROPS> = props => {
 
 
     return (
@@ -13,4 +13,4 @@ const Orders: Component<PROPS> = props => {
     );
 };
 
-export default Orders;
+export default Dashboard;
