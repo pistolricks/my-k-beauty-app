@@ -1,4 +1,4 @@
-import {Component, createEffect, createSignal, Show} from "solid-js";
+import {Component, createEffect, createMemo, createSignal, Show} from "solid-js";
 import {A, RouteSectionProps, useMatch, useNavigate} from "@solidjs/router";
 import {cn} from "~/utils";
 import {bars_3 as Bars3Icon, bookmarkSquare, home as HomeIcon, userCircle, userPlus,} from "solid-heroicons/outline";
@@ -15,40 +15,29 @@ import ClipboardCopy from "~/components/clipboard-copy";
 export const baseUrl = "http://localhost:3000"
 
 
-function paths() {
-    const isHome = useMatch(() => "");
-    const isAbout = useMatch(() => `/about`);
-    const isRegister = useMatch(() => `/register`);
-    const isLogin = useMatch(() => `/login`);
-    const isRiman = useMatch(() => `/riman`);
-
-    return {
-        isHome: isHome(),
-        isAbout: isAbout(),
-        isRegister: isRegister(),
-        isLogin: isLogin(),
-        isRiman: isRiman(),
-    }
-
-}
-
-
 export const defaultSubMenu: [] = []
 
 
 const Admin: Component<RouteSectionProps> = (props) => {
     const {session, signedIn, authenticatedRiman, logout} = useAuth();
 
-    const authenticated = [
-        {name: 'Home', href: `${baseUrl}/`, icon: HomeIcon, current: !!paths()?.isHome},
-        {name: 'Riman', href: `${baseUrl}/riman`, icon: bookmarkSquare, current: !!paths()?.isRiman},
-    ]
 
 
-    const unauthenticated = [
-        {name: 'Login', href: `${baseUrl}/login`, icon: userCircle, current: !!paths()?.isLogin},
-        {name: 'Register', href: `${baseUrl}/register`, icon: userPlus, current: !!paths()?.isRegister},
-    ]
+    const isAbout = useMatch(() => `/about`);
+    const isRegister = useMatch(() => `/register`);
+    const isLogin = useMatch(() => `/login`);
+    const isRiman = useMatch(() => `/riman`);
+
+    const authenticated = createMemo(() => [
+        {name: 'Home', href: baseUrl, icon: HomeIcon, current: true},
+        {name: 'Riman', href: `${baseUrl}/riman`, icon: bookmarkSquare, current: !!isRiman()},
+    ])
+
+
+    const unauthenticated = createMemo(() => [
+        {name: 'Login', href: `${baseUrl}/login`, icon: userCircle, current: !!isLogin()},
+        {name: 'Register', href: `${baseUrl}/register`, icon: userPlus, current: !!isRegister()},
+    ])
 
     const [getSidebarOpen, setSidebarOpen] = createSignal(false)
 
@@ -63,11 +52,11 @@ const Admin: Component<RouteSectionProps> = (props) => {
         console.log("getMode", getMode())
 
 
-        console.log("isHome", paths()?.isHome)
-        console.log("isAbout", paths()?.isAbout)
-        console.log("isRegister", paths()?.isRegister)
-        console.log("isLogin", paths()?.isLogin)
-        console.log("isRiman", paths()?.isRiman)
+        console.log("isHome", true)
+        console.log("isAbout", isAbout())
+        console.log("isRegister", isRegister())
+        console.log("isLogin", isLogin())
+        console.log("isRiman", isRiman())
 
         console.log("getSidebarOpen", getSidebarOpen())
 
@@ -94,8 +83,8 @@ const Admin: Component<RouteSectionProps> = (props) => {
                             isConnected={authenticatedRiman() ? "connected" : "disconnected"}
                             store={`${session()?.rimanSession?.repSiteUrl}`}
                             rid={`${session()?.rimanSession?.username}`}
-                            authenticated={authenticated}
-                            unauthenticated={unauthenticated}
+                            authenticated={authenticated()}
+                            unauthenticated={unauthenticated()}
                         />
                         {/* Sidebar component, swap this element with another sidebar if you like */}
 
@@ -117,7 +106,7 @@ const Admin: Component<RouteSectionProps> = (props) => {
                                             <A
                                                 href={"/register"}
                                                 class={`px-3 py-2 text-sky-600 uppercase transition-colors duration-200  ${
-                                                    !paths()?.isRegister ? "text-sky-900" : "border-transparent hover:text-sky-700"
+                                                    !isRegister() ? "text-sky-900" : "border-transparent hover:text-sky-700"
                                                 }`}
                                             >
                                                 Register
@@ -126,7 +115,7 @@ const Admin: Component<RouteSectionProps> = (props) => {
                                             <A
                                                 href={"/login"}
                                                 class={`px-3 py-2 text-sky-600 uppercase transition-colors duration-200  ${
-                                                    !paths()?.isLogin ? "text-sky-900" : "border-transparent hover:text-sky-700"
+                                                    !isLogin() ? "text-sky-900" : "border-transparent hover:text-sky-700"
                                                 }`}
                                             >
                                                 Login
@@ -153,7 +142,7 @@ const Admin: Component<RouteSectionProps> = (props) => {
 
                                         </span>
                                         }
-                                        when={!authenticatedRiman() && paths()?.isRiman}>
+                                        when={!authenticatedRiman() && isRiman()}>
                                         <></>
 
                                     </Show>
