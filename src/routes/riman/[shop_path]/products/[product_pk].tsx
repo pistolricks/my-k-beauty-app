@@ -7,6 +7,7 @@ import {check, xMark} from "solid-heroicons/solid";
 import {Icon} from "solid-heroicons";
 import {cn} from "~/utils";
 import {getProductDetail} from "~/riman/products";
+import RimanCartProductsUpdate from "~/components/ui/forms/riman-cart-products-update";
 
 type PROPS = RouteSectionProps
 
@@ -28,6 +29,10 @@ const ProductDetails: Component<PROPS> = props => {
     return (
         <div class={"h-full w-full"}>
             <div class={"flex flex-col gap-y-4 h-full w-full"}>
+
+                <RimanCartProductsUpdate product={getProduct()}/>
+
+
                 <span>{JSON.stringify(res(), null, 2)}</span>
 
             </div>

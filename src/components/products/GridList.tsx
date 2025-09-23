@@ -66,7 +66,7 @@ const GridList: Component<{
                                         when={product.pricing?.[0]?.formattedPrice}>
 
 
-                                        <RimanCartProductsUpdate product={products()?.[i()]}/>
+                                        View
 
                                     </Show>
                                 </div>
