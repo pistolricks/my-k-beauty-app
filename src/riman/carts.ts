@@ -1,6 +1,6 @@
 import {apiUrl} from "~/app";
 import {query} from "@solidjs/router";
-import cart_key from "~/routes/riman/carts/[cart_key]";
+import cart_key from "~/routes/riman/[shop_path]/carts/[cart_key]";
 
 const fetchNewCart = async (userInput: { token: string }) =>
     (await fetch(`${apiUrl}/v1/shopping/carts`, {

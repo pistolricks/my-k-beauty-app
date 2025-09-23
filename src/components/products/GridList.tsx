@@ -5,12 +5,15 @@ import {A} from "@solidjs/router";
 import {Icon} from "solid-heroicons";
 import {star} from "solid-heroicons/outline";
 import {cn} from "~/utils";
+import RimanCartProductsUpdate from "~/components/ui/forms/riman-cart-products-update";
 
 const GridList: Component<{
     products: RimanProduct[]
+    path: string
 }> = (props) => {
 
     const products = () => props.products
+    const path = () => props.path
 
     return (
         <div class="bg-white">
@@ -19,7 +22,7 @@ const GridList: Component<{
 
                 <div class="-mx-px grid grid-cols-2 border-l border-gray-50 sm:mx-0 md:grid-cols-3 lg:grid-cols-4">
                     <For each={products()}>
-                        {(product) => (
+                        {(product, i) => (
                             <div class="aspect-3/2 group relative border-r border-b border-gray-50 p-4 sm:p-6">
                                 <img
                                     alt={product.name}
@@ -28,7 +31,7 @@ const GridList: Component<{
                                 />
                                 <div class="pt-10 pb-4 text-center">
                                     <h3 class="text-sm font-medium text-gray-900 min-h-[3rem]">
-                                        <A href={`/${import.meta.env.RIMAN_SHOP}/products/${product?.productPK}`}>
+                                        <A href={`/riman/${path()}/products/${product?.productPK}`}>
                                             <span aria-hidden="true" class="absolute inset-0"/>
                                             {product.name}
                                         </A>
@@ -61,9 +64,10 @@ const GridList: Component<{
                                         </p>
                                     }
                                         when={product.pricing?.[0]?.formattedPrice}>
-                                    <p class="mt-4 py-2 text-xs uppercase rounded-lg font-light text-gray-900 border border-gray-200">
-                                        Add to Bag
-                                    </p>
+
+
+                                        <RimanCartProductsUpdate product={products()?.[i()]}/>
+
                                     </Show>
                                 </div>
                             </div>

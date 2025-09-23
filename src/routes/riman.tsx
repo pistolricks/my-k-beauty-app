@@ -1,7 +1,7 @@
-import {Component, createEffect, createMemo, Show} from "solid-js";
+import {Component, createEffect, createMemo, createSignal, Match, Show, Switch} from "solid-js";
 import {useAuth} from "~/components/Context";
 import {Title} from "@solidjs/meta";
-import {RimanPortal} from "~/components/ui/layouts/riman-portal";
+import {RimanPortal} from "~/components/ui/forms/riman-portal";
 import {RimanLogo} from "~/components/Icons";
 import SectionHeading from "~/components/ui/section-heading";
 import MenuX from "~/components/ui/MenuX";
@@ -26,7 +26,7 @@ type PROPS = RouteSectionProps
 
 
 const RimanLayout: Component<PROPS> = props => {
-    const {session, authenticatedRiman} = useAuth();
+    const {session, authenticatedRiman, getCartKey} = useAuth();
 
     const isDashboard = useMatch(() => "/riman/dashboard");
     const isProducts = useMatch(() => `/riman/products`);
@@ -41,15 +41,16 @@ const RimanLayout: Component<PROPS> = props => {
         console.log(isCarts())
         console.log(isShipping())
         console.log(isOrders())
+        console.log(getCartKey())
     })
 
 
     const tabs = createMemo(() => [
-        { name: 'Dashboard', path: '/riman',  href: `/dashboard`, icon: chartBarSquare, current: !!isDashboard() },
-        { name: 'Products', path: '/riman', href: `/products`, icon: shoppingBag, current: !!isProducts() },
-        { name: 'Carts', path: '/riman', href: `/carts`, icon: shoppingCart, current: !!isCarts() },
-        { name: 'Shipping', path: '/riman', href: `/shipping`, icon: truck, current: !!isShipping() },
-        { name: 'Orders', path: '/riman', href: `/orders`, icon: rectangleStack, current: !!isOrders() },
+        { name: 'Dashboard', path: `/riman`,  href: `/${session()?.rimanSession?.repSiteUrl?.toLowerCase()}/dashboard`, icon: chartBarSquare, current: !!isDashboard() },
+        { name: 'Products', path: `/riman`, href: `/${session()?.rimanSession?.repSiteUrl?.toLowerCase()}/products`, icon: shoppingBag, current: !!isProducts() },
+        { name: 'Carts', path: `/riman`, href: `/${session()?.rimanSession?.repSiteUrl?.toLowerCase()}/carts`, icon: shoppingCart, current: !!isCarts() },
+        { name: 'Shipping', path: `/riman`, href: `/${session()?.rimanSession?.repSiteUrl?.toLowerCase()}/shipping`, icon: truck, current: !!isShipping() },
+        { name: 'Orders', path: `/riman`, href: `/${session()?.rimanSession?.repSiteUrl?.toLowerCase()}/orders`, icon: rectangleStack, current: !!isOrders() },
     ])
 
     return (
@@ -58,28 +59,28 @@ const RimanLayout: Component<PROPS> = props => {
             <Title>Riman</Title>
 
 
-            <Show
-                fallback={
-                <div class={"flex justify-center items-center h-screen"}>
-                    <div class="sm:mx-auto sm:w-full flex flex-col space-y-5 sm:max-w-[480px]">
-                        <div
-                            class="text-center bg-white px-6 py-6 shadow-sm sm:rounded-lg sm:px-12 dark:bg-gray-800/50 dark:shadow-none dark:outline dark:-outline-offset-1 dark:outline-white/10">
-                            <RimanLogo class={"w-full h-full"}/>
+            <Switch>
+                <Match when={!authenticatedRiman()}>
+                    <div class={"flex justify-center items-center h-screen"}>
+                        <div class="sm:mx-auto sm:w-full flex flex-col space-y-5 sm:max-w-[480px]">
+                            <div
+                                class="text-center bg-white px-6 py-6 shadow-sm sm:rounded-lg sm:px-12 dark:bg-gray-800/50 dark:shadow-none dark:outline dark:-outline-offset-1 dark:outline-white/10">
+                                <RimanLogo class={"w-full h-full"}/>
+                            </div>
+                            <div
+                                class="bg-white px-6 py-12 shadow-sm sm:rounded-lg sm:px-12 dark:bg-gray-800/50 dark:shadow-none dark:outline dark:-outline-offset-1 dark:outline-white/10">
+                                <RimanPortal/>
+                            </div>
                         </div>
-                        <div
-                            class="bg-white px-6 py-12 shadow-sm sm:rounded-lg sm:px-12 dark:bg-gray-800/50 dark:shadow-none dark:outline dark:-outline-offset-1 dark:outline-white/10">
-                            <RimanPortal/>
-                        </div>
+
                     </div>
-
-                </div>
-
-                }
-                when={authenticatedRiman()}>
+                </Match>
+            <Match when={authenticatedRiman()}>
                 <SectionHeading
-                    title={session()?.rimanSession?.repSiteUrl}
+                    title={getCartKey() ?? session()?.rimanSession?.repSiteUrl}
+                    titleClass={getCartKey() ? "text-emerald-800" : ""}
                     subTitle={session()?.rimanSession?.email}
-                    status={authenticatedRiman() ? "ONLINE" : "OFFLINE"}
+                    status={getCartKey() ? "SHOPPING" : authenticatedRiman() ? "ONLINE" : "OFFLINE"}
                 />
 
                 <MenuX  menu={tabs()}/>
@@ -87,8 +88,8 @@ const RimanLayout: Component<PROPS> = props => {
 
                 {props.children}
 
-            </Show>
-
+            </Match>
+            </Switch>
         </div>
 
     );

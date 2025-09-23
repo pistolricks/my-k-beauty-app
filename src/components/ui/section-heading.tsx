@@ -2,10 +2,12 @@ import {Component} from "solid-js";
 
 const SectionHeading: Component<{
     title: string
+    titleClass?: string
     subTitle: string
     status: string
 }> = (props) => {
     const title = () => props.title;
+    const titleClass = () => props.titleClass;
     const subTitle = () => props.subTitle;
     const status = () => props.status;
     return (
@@ -13,7 +15,7 @@ const SectionHeading: Component<{
             <div class="sm:flex sm:items-baseline sm:justify-between">
                 <div class="sm:w-0 sm:flex-1">
                     <h1 id="message-heading" class="text-base font-semibold text-gray-900 dark:text-white">
-                        {title()}
+                        <span class={titleClass() ?? ""}>{title()}</span>
                     </h1>
                     <p class="mt-1 truncate text-sm text-gray-500 dark:text-gray-400">
                         {subTitle()}

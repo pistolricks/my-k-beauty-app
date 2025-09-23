@@ -42,11 +42,15 @@ export const getSelections = query(async () => {
     return (await response.json()) as any;
 }, "selections");
 
-
-export const getProductDetail = query(async () => {
-    const response = await fetch(`${apiUrl}/v2/products/detail`)
+export const getProductDetail = query(async (token: string, product_pk: string) => {
+    const response = await fetch(`${apiUrl}/v2/product/${product_pk}`, {
+        headers: {
+            "Accept": "application/json",
+            "X-Riman-Token": token,
+        }
+    })
     return (await response.json()) as any;
-}, "detail");
+}, "product-details");
 
 export const getLovedProducts = query(async () => {
     const response = await fetch(`${apiUrl}/v2/products/loved`)

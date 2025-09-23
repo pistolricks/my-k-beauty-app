@@ -19,8 +19,7 @@ export const defaultSubMenu: [] = []
 
 
 const Admin: Component<RouteSectionProps> = (props) => {
-    const {session, signedIn, authenticatedRiman, logout} = useAuth();
-
+    const {session, signedIn, authenticatedRiman} = useAuth();
 
 
     const isAbout = useMatch(() => `/about`);

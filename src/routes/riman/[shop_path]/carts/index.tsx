@@ -41,7 +41,7 @@ const Carts: Component<PROPS> = props => {
             <div class={"w-full py-4"}>
                 <ErrorBoundary fallback={<div>Something went wrong!</div>}>
                     <Suspense fallback={<div>Loading...</div>}>
-                        <CartList carts={response()?.carts}/>
+                        <CartList path={session()?.rimanSession?.repSiteUrl?.toLowerCase()} carts={response()?.carts}/>
                     </Suspense>
                 </ErrorBoundary>
             </div>
@@ -88,9 +88,11 @@ export function CartPanel(props: {
 
 
 export const CartList: Component<{
+    path: string,
     carts: RimanCart[]
 }> = (props) => {
 
+    const path = () => props.path;
     const carts = () => props.carts;
 
 
@@ -126,7 +128,7 @@ export const CartList: Component<{
 
 
                             <A
-                                href={`/riman/carts/${cart.cart_key}`}
+                                href={`/riman/${path()}/carts/${cart.cart_key}`}
                                 type="button"
                                 class="inline-flex items-center rounded-xs bg-emerald-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-emerald-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-500 dark:bg-emerald-500 dark:shadow-none dark:hover:bg-emerald-400 dark:focus-visible:outline-emerald-500"
                             >
