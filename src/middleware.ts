@@ -1,15 +1,20 @@
 import { createMiddleware } from "@solidjs/start/middleware";
+import {getSession} from "~/auth/server";
+
+
 
 export default createMiddleware({
     onRequest: [
-        event => {
-            event.locals.foo = "bar";
-            console.log("REQUEST");
+        async event => {
+            const {data} = await getSession();
+            event.locals.session = data;
+            console.log(event.locals.session);
         }
     ],
     onBeforeResponse: [
         (event, { body }) => {
-            console.log("BEFORE RESPONSE");
+            event.locals.response = body;
+            console.log("start", body, event.locals.response);
         }
     ]
 });

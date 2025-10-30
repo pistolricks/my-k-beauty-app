@@ -42,10 +42,11 @@ export const getSelections = query(async () => {
     return (await response.json()) as any;
 }, "selections");
 
-export const getProductDetail = query(async (token: string, product_pk: string) => {
+export const getProductDetail = query(async (sessionToken: string, token: string, product_pk: string) => {
     const response = await fetch(`${apiUrl}/v2/product/${product_pk}`, {
         headers: {
-            "Accept": "application/json",
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${sessionToken}`,
             "X-Riman-Token": token,
         }
     })

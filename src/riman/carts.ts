@@ -2,21 +2,23 @@ import {apiUrl} from "~/app";
 import {query} from "@solidjs/router";
 import cart_key from "~/routes/riman/[shop_path]/carts/[cart_key]";
 
-const fetchNewCart = async (userInput: { token: string }) =>
+const fetchNewCart = async (userInput: { token: string, riman_token: string }) =>
     (await fetch(`${apiUrl}/v1/shopping/carts`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "X-Riman-Token": userInput.token,
+                "Authorization": "Bearer " + userInput.token,
+                "X-Riman-Token": userInput.riman_token,
             }
         })
     ).json()
 
-export const createNewCartHandler = async (token: string) => {
+export const createNewCartHandler = async (token: string, rimanToken: string) => {
     console.log("token", token)
 
     const userInput = {
         token: token,
+        riman_token: rimanToken,
     }
     let res = await fetchNewCart(userInput);
 
@@ -64,25 +66,3 @@ export const cartStatusHandler = async (token: string, cart_Key: string) => {
     return res;
 }
 
-const fetchUpdateCart = async (userInput: { token: string }, cart_key: string ) =>
-    (await fetch(`${apiUrl}/v1/shopping/carts/${cart_key}`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(userInput),
-        })
-    ).json()
-
-export const cartUpdateHandler = async (token: string, cart_Key: string) => {
-    console.log("token", token)
-
-    const userInput = {
-        token: token,
-    }
-    let res = await fetchCartStatus(userInput, cart_Key);
-
-    console.log("res", res)
-
-    return res;
-}

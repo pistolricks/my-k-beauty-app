@@ -14,7 +14,7 @@ type PROPS = RouteSectionProps
 
 const ProductDetails: Component<PROPS> = props => {
     const {session} = useAuth();
-    const res = createAsync(() => getProductDetail(session()?.rimanSession?.token, props.params.product_pk as string), {})
+    const res = createAsync(() => getProductDetail(session()?.token, session()?.rimanSession?.token, props.params.product_pk as string), {})
     const [getProduct, setProduct] = createSignal<RimanProduct>(res()?.product)
 
 

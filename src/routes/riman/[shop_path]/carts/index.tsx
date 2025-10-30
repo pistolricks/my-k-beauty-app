@@ -19,7 +19,7 @@ const Carts: Component<PROPS> = props => {
     const createCart = async () => {
         if (!session()?.rimanSession?.token) return;
 
-        let res = await createNewCartHandler(session()?.rimanSession?.token as string)
+        let res = await createNewCartHandler(session()?.token, session()?.rimanSession?.token as string)
 
         setCart(() => res.cart)
 
