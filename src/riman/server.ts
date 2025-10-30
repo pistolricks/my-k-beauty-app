@@ -21,7 +21,7 @@ export async function rimanLogin(userName: string, password: string, session: Se
 
     console.log(credentials)
 
-    let res = await loginRiman(credentials);
+    let res = await loginRiman(session?.token, credentials);
 
     let rimanSession = {
         id: res.client?.id,
